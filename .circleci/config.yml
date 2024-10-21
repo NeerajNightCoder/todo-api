@@ -14,8 +14,11 @@ jobs:
           name: Install Dependencies
           command: npm install
       - run:
+          name: Install SonarQube Scanner
+          command: npm install -g sonar-scanner
+      - run:
           name: Run SonarQube Scanner
-          command: npx sonar-scanner
+          command: sonar-scanner
       - run:
           name: Archive SonarQube Report
           command: |
