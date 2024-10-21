@@ -44,7 +44,7 @@ describe('Todo API', () => {
   // Test DELETE /todos/:id
   it('should delete a todo', async () => {
     const res = await request(app).delete('/todos/1');
-    expect(res.statusCode).toBe(205);
+    expect(res.statusCode).toBe(204);
 
     const getRes = await request(app).get('/todos/1');
     expect(getRes.statusCode).toBe(404);
