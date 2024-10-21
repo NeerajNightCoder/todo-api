@@ -3,7 +3,7 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: circleci/node:20.18.0
+      - image: node:20.18.0 # Using the official Node.js Docker image
 
 jobs:
   lint:
