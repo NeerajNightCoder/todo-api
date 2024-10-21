@@ -6,24 +6,44 @@ executors:
       - image: node:20.18.0 # Using the official Node.js Docker image
 
 jobs:
-  test:
+  lint:
     executor: node-executor
     steps:
-      # Checkout the code from the repository
       - checkout
-
-      # Install dependencies
       - run:
           name: Install Dependencies
           command: npm install
-
-      # Run Jest tests
       - run:
-          name: Run Jest Tests
+          name: Install SonarQube Scanner Locally
+          command: npm install sonar-scanner --save-dev
+      - run:
+          name: Run SonarQube Scanner
+          command: ./node_modules/.bin/sonar-scanner
+      - run:
+          name: Archive SonarQube Report
+          command: |
+            mkdir -p reports
+            cp -r /path/to/sonarqube/report/* reports/
+      - store_artifacts:
+          path: reports
+          destination: sonarqube-reports
+
+  test:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - run:
+          name: Run Tests
           command: npm test
 
 workflows:
   version: 2
-  test-on-main:
+  test-and-lint:
     jobs:
-      - test
+      - lint
+      - test:
+          requires:
+            - lint # The test job will only run if the lint job passes
