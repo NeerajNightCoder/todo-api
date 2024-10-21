@@ -1,0 +1,33 @@
+version: 2.1
+
+executors:
+  node-executor:
+    docker:
+      - image: circleci/node:20.18.0 # Matching your Node.js version
+
+jobs:
+  test:
+    executor: node-executor
+    steps:
+      # Checkout the code from the repository
+      - checkout
+
+      # Install dependencies
+      - run:
+          name: Install Dependencies
+          command: npm install
+
+      # Run Jest tests
+      - run:
+          name: Run Jest Tests
+          command: npm test
+
+workflows:
+  version: 2
+  test-on-master:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+                - master # Run tests only on push or PR to master
