@@ -3,7 +3,7 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: circleci/node:20.18.0 # Matching your Node.js version
+      - image: node:20.18.0 # Using the official Node.js Docker image
 
 jobs:
   test:
@@ -30,4 +30,4 @@ workflows:
           filters:
             branches:
               only:
-                - main # Run tests only on push or PR to master
+                - main # Run tests only on push or PR to main
