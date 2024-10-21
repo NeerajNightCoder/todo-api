@@ -24,10 +24,10 @@ jobs:
 
 workflows:
   version: 2
-  test-on-master:
+  test-on-main:
     jobs:
       - test:
           filters:
             branches:
               only:
-                - master # Run tests only on push or PR to master
+                - main # Run tests only on push or PR to master
